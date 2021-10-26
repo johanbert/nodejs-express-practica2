@@ -49,12 +49,13 @@ app.put('/users/:id', (req, res) => {
 
 app.patch('/users/:id', (req, res) => {
     const { body } = req;
-    body.id = req.params.id
-
-    const response = DB_USERS.find((obj, i) => obj.id === body.id ? DB_USERS[i] = body : false)
+    delete body.id;
+    const response = DB_USERS.find((obj, i) => {
+        return obj.id != req.params.id ? false : Array.from(Object.keys(body)).map((key) => DB_USERS[i][key] = body[key])
+    })
 
     if (!response)
-        return res.status(404).json({ message: `NO SE ENCONTRÓ EL ID:${body.id}` })
+        return res.status(404).json({ message: `NO SE ENCONTRÓ EL ID:${req.params.id}` })
     res.status(200).json({ OK: true })
 })
 
