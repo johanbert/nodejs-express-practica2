@@ -1,12 +1,12 @@
-export const get = (req, res) => {
+get = (req, res) => {
     res.json(DB_USERS)
 }
-export const add = (req, res) => { // RECURSO /users
+add = (req, res) => { // RECURSO /users
     req.body.id = uuidv1()
     DB_USERS.push(req.body)
     res.status(201).json({ id: req.body.id, message: 'RECURSO CREADO' })
 }
-export const editAll = (req, res) => {
+editAll = (req, res) => {
 
     // const body = req.body;
     const { body } = req;
@@ -25,7 +25,7 @@ export const editAll = (req, res) => {
         return res.status(404).json({ message: `NO SE ENCONTRÓ EL ID:${body.id}` })
     res.status(200).json({ OK: true })
 }
-export const editSomeones = (req, res) => {
+editSomeones = (req, res) => {
 
     const { body } = req;
     delete body.id;
@@ -37,10 +37,12 @@ export const editSomeones = (req, res) => {
         return res.status(404).json({ message: `NO SE ENCONTRÓ EL ID:${req.params.id}` })
     res.status(200).json({ OK: true })
 }
-export const remove = (req, res) => {
+remove = (req, res) => {
     const response = DB_USERS.find((obj, i) => obj.id === req.params.id ? DB_USERS.splice(i, 1) : false)
 
     if (!response)
         return res.status(404).json({ message: `NO SE ENCONTRÓ EL ID:${req.params.id}` })
     res.status(200).json({ OK: true })
 }
+
+module.exports = {get, add, editAll, editSomeones, remove }

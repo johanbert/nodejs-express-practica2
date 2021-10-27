@@ -15,10 +15,35 @@ app.use(express.urlencoded({ extended: true }));
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
-app.get('/users', get)
-app.post('/users', add)
-app.put('/users/:id', editAll)
-app.patch('/users/:id', editSomeones)
-app.delete('/users/:id', remove)
+app.use((req, res, next) => {
+    console.log('HOLA, PASASTE POR AQUI >.> sigue tu camino ')
+    next()
+})
+
+// app.get('/users', get)
+// app.post('/users', add)
+app.route('/users')
+    .get(get)
+    .post(add);
+
+// app.put('/users/:id', editAll)
+// app.patch('/users/:id', editSomeones)
+// app.delete('/users/:id', remove)
+app.route('/users/:id')
+    .put(editAll)
+    .patch(editSomeones)
+    .delete(remove);
+
+
+app.route('/book')
+    .get(function(req, res) {
+        res.send('Get a random book');
+    })
+    .post(function(req, res) {
+        res.send('Add a book');
+    })
+    .put(function(req, res) {
+        res.send('Update the book');
+    });
 
 app.listen(port, () => console.log('Server ready', port))
