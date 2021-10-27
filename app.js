@@ -5,17 +5,17 @@ const helmet = require('helmet');
 const app = express()
 const port = 3000
 
-// DATABASE IN MEMORY
-
 app.use(helmet());
-// ENDPOINTS
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({ extended: true }));
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
+
 //example global middleware
 app.use(test)
+
+// ENDPOINTS
 
 // app.get('/users', get)
 // app.post('/users', add)
